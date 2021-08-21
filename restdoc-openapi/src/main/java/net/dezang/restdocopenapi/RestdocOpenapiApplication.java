@@ -9,5 +9,4 @@ public class RestdocOpenapiApplication {
     public static void main(String[] args) {
         SpringApplication.run(RestdocOpenapiApplication.class, args);
     }
-
 }
