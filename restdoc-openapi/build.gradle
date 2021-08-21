@@ -1,8 +1,8 @@
 plugins {
     id 'org.springframework.boot' version '2.5.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
     id 'java'
+    id 'com.epages.restdocs-api-spec' version '0.11.5'
 }
 
 group = 'net.dezang'
@@ -19,24 +19,23 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    set('snippetsDir', file("build/generated-snippets"))
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.11.5' // For openapi spec
+}
+
+openapi3 {
+    server = 'http://localhost:8080'
+    title = 'USER-API'
+    description = '사용자 리소스 API 입니다.'
+    version = '0.1.0'
+    format = 'yaml'
 }
 
 test {
-    outputs.dir snippetsDir
     useJUnitPlatform()
-}
-
-asciidoctor {
-    inputs.dir snippetsDir
-    dependsOn test
 }
